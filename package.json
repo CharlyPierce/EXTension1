@@ -1,0 +1,16 @@
+{
+  "name": "miextension",
+  "version": "1.0.0",
+  "description": "",
+  "main": "background.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "jquery": "^3.7.0",
+    "jquery-ui-dist": "^1.13.2"
+  }
+}

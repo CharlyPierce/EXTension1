@@ -1,0 +1,35 @@
+{
+  "manifest_version": 3,
+  "name": "Capturador de Area",
+  "version": "1.0",
+  "description": "Una extensión simple para capturar áreas seleccionadas",
+  "permissions": ["activeTab", "tabs", "notifications","storage", "scripting", "downloads","webRequest","contextMenus"], 
+  "host_permissions": ["<all_urls>"],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icon.png"
+    }
+  },
+  "icons": {
+    "16": "icon.png"
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self';"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["dist/jquery.min.js","dist/jquery-ui.min.js","dist/tesseract.min.js","dist/bundle.js","popup.js","content.js"]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["icon.png"],
+      "matches": ["<all_urls>"]
+    }
+  ]
+}
