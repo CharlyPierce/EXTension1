@@ -11,6 +11,7 @@ Para comenzar, selecciona el idioma al que deseas traducir. Además, es fundamen
 
 ### 3. Selecciona el Texto a Traducir
 A continuación, selecciona el texto que deseas traducir.
+Selecciona de izquierda a derecha y de arriba a abajo; de lo contrario, no funcionará.
 ![Selección de texto](img/2.png)
 
 ### 4. Resultado de la Traducción
