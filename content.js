@@ -127,8 +127,8 @@ async function getTranslatedCoords(wordsAndCoords, token, target) {
             return; // Esto detendrá la ejecución del programa
         }
 
-        console.log(wordsAndCoords)
-        console.log(pairedTranslations)
+        // console.log(wordsAndCoords)
+        // console.log(pairedTranslations)
         
         let currentIndex = 0;
         const translatedWordsAndCoords = [];
@@ -245,9 +245,9 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
         // Uso de la función
         cropImage(dataUrl, startX, startY, endX, endY, function(croppedDataUrl) {
             // console.log(croppedDataUrl); // Esto imprimirá la nueva imagen recortada en base64
-            let imgElement = document.createElement('img');
-            imgElement.src = croppedDataUrl;
-            document.body.appendChild(imgElement);
+            // let imgElement = document.createElement('img');
+            // imgElement.src = croppedDataUrl;
+            // document.body.appendChild(imgElement);
 
             async function processImage(croppedDataUrl) {
                 try {
@@ -412,6 +412,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
                         getTranslatedCoords(wordsAndCoords, tokenValue, selectedLanguage).then(result => {
                             for (const wordData of result) {
                                 addWordToOverlay(wordData, overlay);
+                                
                             }
                         }).catch(error => {
                             // console.error("Error al obtener las coordenadas traducidas:", error);
