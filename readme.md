@@ -25,3 +25,8 @@ Para evitar ingresar constantemente tu API key, haz clic derecho y selecciona el
 ---
 
 Esperamos que este manual te sea útil y disfrutes usando EXTension1.
+
+
+## Tecnologías Utilizadas
+
+Esta extensión utiliza [Tesseract.js](https://github.com/naptha/tesseract.js/tree/master) para detectar y extraer texto. Agradecemos a los creadores y contribuyentes de Tesseract.js por su excelente trabajo. Puedes encontrar el proyecto original y contribuir en su [repositorio de GitHub](https://github.com/naptha/tesseract.js/tree/master).
