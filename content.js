@@ -112,7 +112,59 @@ function cropImage(dataUrl, startX, startY, endX, endY, callback) {
 }
 
 
-const DESPLAZAMIENTO = 30;  // Ajusta este valor según lo que necesites
+
+
+
+
+
+
+function rearrangeTranslations(pairedTranslations) {
+    // Extract sentences
+    let englishPhrase = pairedTranslations.map(pair => pair.text).join(' ');
+    let spanishPhrase = pairedTranslations.map(pair => pair.translation).join(' ');
+
+    // Split sentences into words
+    let englishWords = englishPhrase.split(' ').filter(word => word);
+    let spanishWords = spanishPhrase.split(' ').filter(word => word);
+
+    // Determine max length
+    let maxLength = Math.max(englishWords.length, spanishWords.length);
+
+    // Prepare lists
+    let rearrangedEnglishWords = Array(maxLength).fill('');
+    let rearrangedSpanishWords = Array(maxLength).fill('');
+
+    // Rearrange words
+    let englishIndex = 0;
+    let spanishIndex = 0;
+    while (englishWords.length > 0 || spanishWords.length > 0) {
+        if (spanishWords.length > 0) {
+            rearrangedSpanishWords[spanishIndex++] = spanishWords.shift();
+        }
+        if (spanishWords.length > 0) {
+            rearrangedSpanishWords[maxLength - spanishIndex] = spanishWords.pop();
+        }
+        if (englishWords.length > 0) {
+            rearrangedEnglishWords[englishIndex++] = englishWords.shift();
+        }
+        if (englishWords.length > 0) {
+            rearrangedEnglishWords[maxLength - englishIndex] = englishWords.pop();
+        }
+    }
+
+    // Create paired translations
+    let rearrangedPairs = [];
+    for (let i = 0; i < maxLength; i++) {
+        rearrangedPairs.push({
+            text: rearrangedEnglishWords[i],
+            translation: rearrangedSpanishWords[i]
+        });
+    }
+
+    return rearrangedPairs;
+}
+
+const DESPLAZAMIENTO = 10;  // Ajusta este valor según lo que necesites
 async function getTranslatedCoords(wordsAndCoords, token, target) {
     try {
         // Extraer palabras y traducirlas
@@ -129,6 +181,13 @@ async function getTranslatedCoords(wordsAndCoords, token, target) {
 
         // console.log(wordsAndCoords)
         // console.log(pairedTranslations)
+
+        let rearranged = rearrangeTranslations(pairedTranslations);
+        // console.log(rearranged);       //palabras acomodadas
+
+
+        pairedTranslations = rearranged;
+
         
         let currentIndex = 0;
         const translatedWordsAndCoords = [];
@@ -168,6 +227,14 @@ async function getTranslatedCoords(wordsAndCoords, token, target) {
         throw new Error("Token incorrecto.2");
     }    
 }
+
+
+
+
+
+
+
+
 
 
 
