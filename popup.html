@@ -3,6 +3,43 @@
 <head>
     <title>Capture</title>
     <meta charset="UTF-8">
+            <style>
+                    .bottn {
+                        display: flex;
+                        justify-content: space-between;
+                        flex-wrap: wrap;
+                        max-width: 200px;
+                    }
+
+                    .bottn > div {
+                        flex: 1;
+                        margin: 5px;
+                        box-sizing: border-box;
+                    }
+
+                    label {
+                        display: inline-block;
+                        margin-right: 10px;
+                        color: blue;  /* Cambiamos el color de las letras a azul */
+                    }
+                    input[type="number"] {
+                        width: 15px;
+                        text-align: center;
+                    }
+
+                    .bottn {
+                        display: flex;
+                        flex-direction: column;
+                        align-items: center; /* Centra las filas horizontalmente */
+                    }
+
+                    .row {
+                        display: flex;
+                        justify-content: space-between; /* Espacia los elementos de la fila uniformemente */
+                        width: 100%;
+                        margin-bottom: 10px; /* Puedes ajustar este valor según tus necesidades */
+                    }
+            </style>
 </head>
 
 <body>
@@ -25,12 +62,55 @@
             <option value="zh-CN">Chino (simplificado)</option>
             <option value="zh-TW">Chino (tradicional)</option>
         </select>
-    </div>
+        <div class="bottn">
+            <div class="row">
+                <!-- Botones para el eje X -->
+                <div>
+                    <label for="xInput">👈👉</label>
+                    <input type="number" id="xInput" value="0">
+                </div>
+        
+                <!-- Botones para el eje Y -->
+                <div>
+                    <label for="yInput">👇👆</label>
+                    <input type="number" id="yInput" value="0">
+                </div>
+        
+                <!-- Botones para la distancia entre párrafos (I) -->
+                <div>
+                    <label for="iInput">⇜hi⇝</label>
+                    <input type="number" id="iInput" value="0">
+                </div>
+            </div>
+            <div class="row">
+                <!-- Botones para el espacio entre letras (S) -->
+                <div>
+                    <label for="sInput">hola➞h o l a</label>
+                    <input type="number" id="sInput" value="0">
+                </div>
+                <div>
+                    <label for="zInput">h➞H</label>
+                    <input type="number" id="zInput" value="0">
+                </div>
+            </div>
+            <div class="row">
+                <div>
+                    <label for="qInput">hi⇵bye⇅</label>
+                    <input type="number" id="qInput" value="0">
+                </div>
+                <div class>
+                    <button id="reset">reseet</button>
+                </div>
+            </div>
+        </div>
+        
+
     <button id="selectAreaBtn">screen</button>
 
     <div>
-        <a href="https://www.buymeacoffee.com/charlypierce" target="_blank"><p>BUY-ME-COFFE</button></p>
+        <a href="https://www.buymeacoffee.com/charlypierce" target="_blank"><p>BUY-ME-COFFE</button></p></a>
     </div>
+
     <script src="popup.js"></script>
 </body>
 
