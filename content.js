@@ -474,6 +474,10 @@ function extractWordsAndCoords(data, startX, startY) {
 
 async function processImage(croppedDataUrl, startX, startY) {
     try {
+
+
+
+
         const worker = await Tesseract.createWorker();
         await worker.loadLanguage('eng');
         await worker.initialize('eng');
@@ -507,7 +511,7 @@ async function processImage(croppedDataUrl, startX, startY) {
 
         await worker.terminate();
     } catch (error) {
-        console.error("Error al procesar la imagen:", error);
+        console.error("Error al procesar la imagen 2:", error);
     }
 }
 // Función para actualizar la posición X de los elementos
@@ -683,6 +687,10 @@ function updateQPosition(spacingValue) {
 // Escuchar mensajes del popup
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     if (request.action == "startSelection") {
+        let btn = document.getElementById('overlay-close-btn');
+        if (btn) {
+            btn.click();
+        }
         startSelectionProcess();
         const myToken = request.token; 
         const myTarget = request.language;

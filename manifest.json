@@ -3,7 +3,7 @@
   "name": "Traductor para archivos PDF",
   "version": "2.0",
   "description": "Capture, detect, and translate text overlay on PDF pages. Enhance your reading and comprehension in multiple languages.",
-  "permissions": ["activeTab", "tabs","storage", "scripting","contextMenus"], 
+  "permissions": ["activeTab","storage","contextMenus"], 
   "host_permissions": ["<all_urls>"],
   "background": {
     "service_worker": "background.js"
