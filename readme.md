@@ -26,7 +26,7 @@ Para evitar ingresar constantemente tu API key, haz clic derecho y selecciona el
 Mover en Eje X: Utiliza el primer botón para desplazar el texto en el eje horizontal.  
 Mover en Eje Y: Usa el segundo botón para mover el texto verticalmente.  
 Fondo Blanco Extendido: Con el tercer botón, puedes agregar un fondo blanco más grande detrás del texto para mejorar su visibilidad.  
-Separación de Letras: El cuarto botón te permite ajustar el espacio entre las letras del texto.  
+Separación de Letras: El cuarto botón te permite ajustar el espacio entre las palabras del texto.  
 Tamaño de Letra: Con el quinto botón, puedes incrementar el tamaño de la letra.  
 Espaciado Interlineado: El último botón ajusta el espacio entre las líneas del texto.  
 El boton de reset restablece los parametros a cero.  
