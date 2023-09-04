@@ -94,7 +94,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     document.getElementById('reset').addEventListener('click', function() {
-        chrome.storage.local.set({ 'X':0,'Y':0,'I':0,'S':0,'Z':12 });
+        chrome.storage.local.set({ 'X':0,'Y':0,'I':0,'S':0,'Z':12,'Q':0 });
     });
 
 

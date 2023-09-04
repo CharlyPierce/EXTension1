@@ -173,7 +173,9 @@ let DESPLAZAMIENTO=0;
 //     }
 // });
 
+
 async function getTranslatedCoords(wordsAndCoords, token, target) {
+    // Obtener el valor de 'Q' del almacenamiento
     try {
         // Extraer palabras y traducirlas
         const palabras = wordsAndCoords.map(item => item.text);
@@ -212,10 +214,10 @@ async function getTranslatedCoords(wordsAndCoords, token, target) {
                 const coords = originalWord 
                     ? wordsAndCoords[currentIndex].coords 
                     : [
-                        translatedWordsAndCoords[translatedWordsAndCoords.length - 1].coords[0] + DESPLAZAMIENTO,
-                        translatedWordsAndCoords[translatedWordsAndCoords.length - 1].coords[1]
+                        translatedWordsAndCoords[translatedWordsAndCoords.length - 1].coords[0] + DESPLAZAMIENTO,           // coordenada en x
+                        translatedWordsAndCoords[translatedWordsAndCoords.length - 1].coords[1]                           //coordenada en y
                       ];
-
+                
                 if (translatedWord) {
                     translatedWordsAndCoords.push({
                         text: translatedWord,
@@ -325,7 +327,7 @@ function addWordToOverlay(wordData, overlay) {
                 currentLineDiv = null;
             }
         });
-
+        
 
     });
 }
@@ -453,23 +455,29 @@ function createCloseButton(overlay) {
     overlay.appendChild(closeButton);
 }
 
+
+
+
+
 function extractWordsAndCoords(data, startX, startY) {
+
     let wordsAndCoords = [];
-    for (const block of data.blocks) {
-        for (const paragraph of block.paragraphs) {
-            for (const line of paragraph.lines) {
-                for (const word of line.words) {
-                    let adjustedX0 = word.bbox.x0 + startX;
-                    let adjustedY0 = word.bbox.y0 + startY;
-                    wordsAndCoords.push({
-                        text: word.text,
-                        coords: [adjustedX0, adjustedY0]
-                    });
+
+        for (const block of data.blocks) {
+            for (const paragraph of block.paragraphs) {
+                for (const line of paragraph.lines) {
+                    for (const word of line.words) {
+                        let adjustedX0 = word.bbox.x0 + startX;
+                        let adjustedY0 = word.bbox.y0 + startY;                      //====================COORDENADA EN Y=====================
+                        wordsAndCoords.push({
+                            text: word.text,
+                            coords: [adjustedX0, adjustedY0]
+                        });
+                    }
                 }
             }
         }
-    }
-    return wordsAndCoords;
+        return wordsAndCoords;
 }
 
 async function processImage(croppedDataUrl, startX, startY) {
@@ -504,9 +512,9 @@ async function processImage(croppedDataUrl, startX, startY) {
                 for (const wordData of result) {
                     addWordToOverlay(wordData, overlay);
                 }
-            }).catch(error => {
-                console.error("Error al obtener las coordenadas traducidas:", error);
-            });
+                updateQPosition(0,true)
+            }).catch(error => {});
+
         });
 
         await worker.terminate();
@@ -660,40 +668,52 @@ function updateSPosition(spacingValue) {
 
     });
 }
-function updateQPosition(spacingValue) {
+
+
+function updateQPosition(spacingValue, s=false) {
     chrome.storage.local.get('Q', function(data) {
 
-        let currentVerticalSpacing = data.Q ? parseInt(data.Q) : 0;
-        currentVerticalSpacing += spacingValue;
+        let inter = 0;
+        let n=0;
+        if(s){
+            inter = data.Q;
+        }
         let lines = document.querySelectorAll('.line');
-        
         if (lines.length) {
-            let newTopValue = parseInt(lines[0].style.top, 10) || 0;
+            let cumulativeSpacing = 0; // Introduce a cumulative spacing variable
 
-            for (let i = 0; i < lines.length; i++) {
-                if (i > 0) {
-                    newTopValue += lines[i - 1].offsetHeight + currentVerticalSpacing;
-                }
+            for (let i = 1; i < lines.length; i++) { // start from the second div
+                // Calculate the distance between current div and previous div
+                let currentDistance = ( lines[i].offsetTop - (lines[i - 1].offsetTop + lines[i - 1].offsetHeight)+(i*spacingValue)+(inter+n) );
+
+                cumulativeSpacing += spacingValue;  // Increment cumulative spacing by spacingValue
+                
+                // New top position for current div
+                let newTopValue = (lines[i - 1].offsetTop + lines[i - 1].offsetHeight + currentDistance + cumulativeSpacing);
                 lines[i].style.top = newTopValue + "px";
+                if(s){n+=1}
             }
         }
 
     });
-
 }
 
 
 
 // Escuchar mensajes del popup
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+
+
     if (request.action == "startSelection") {
         let btn = document.getElementById('overlay-close-btn');
-        if (btn) {
-            btn.click();
+        if (btn) btn.click();
+
+        const url = window.location.href;
+        if (url.match(/\.pdf$/i) || url.match(/^https:\/\/esfm-index\.de\/page4\/.*/i)) {
+            startSelectionProcess();
+            const myToken = request.token; 
+            const myTarget = request.language;
         }
-        startSelectionProcess();
-        const myToken = request.token; 
-        const myTarget = request.language;
     }
     else  if (request.action === "edit_image") { 
         let dataUrl = request.dataUrl;
